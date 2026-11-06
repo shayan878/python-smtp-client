@@ -47,7 +47,8 @@ class SMTPClient:
         self._socket, self._reader = raw, raw.makefile("rb")
         try:
             self._expect(self._read(), {220}, "greeting")
-            hello = self._command(f"EHLO {socket.getfqdn() or \"localhost\"}", {250})
+            hostname = socket.getfqdn() or "localhost"
+            hello = self._command(f"EHLO {hostname}", {250})
             if "STARTTLS" not in " ".join(hello.lines).upper():
                 raise SMTPError("Server does not advertise STARTTLS.")
             self._command("STARTTLS", {220})
@@ -55,7 +56,7 @@ class SMTPClient:
             self._socket = self._context.wrap_socket(raw, server_hostname=self.host)
             self._reader = self._socket.makefile("rb")
             self._tls = True
-            return self._command(f"EHLO {socket.getfqdn() or \"localhost\"}", {250})
+            return self._command(f"EHLO {hostname}", {250})
         except Exception:
             self.close()
             raise
