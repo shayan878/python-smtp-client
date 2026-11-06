@@ -8,7 +8,7 @@ import ssl
 from dataclasses import dataclass
 from email.message import EmailMessage
 from email.policy import SMTP as SMTP_POLICY
-from typing import Iterable
+from collections.abc import Iterable
 
 
 @dataclass(frozen=True)
