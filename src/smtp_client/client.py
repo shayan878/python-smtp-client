@@ -5,10 +5,10 @@ from __future__ import annotations
 import base64
 import socket
 import ssl
+from collections.abc import Iterable
 from dataclasses import dataclass
 from email.message import EmailMessage
 from email.policy import SMTP as SMTP_POLICY
-from collections.abc import Iterable
 
 
 @dataclass(frozen=True)
